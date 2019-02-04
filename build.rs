@@ -4,6 +4,7 @@
 extern crate cc;
 
 use std::path::Path;
+use std::env;
 
 fn main() {
     let mut builder = cc::Build::new();
@@ -333,6 +334,9 @@ fn main() {
             .files(specialize_sources.iter().map(|file| specialized_source_path.join(Path::new(file))));
     } else {
         unimplemented!("build rules are not implemented for the current target_arch and target_os");
+    }
+    if env::var("OPT_LEVEL").unwrap() == "0" {
+        builder.opt_level(1); // work around softfloat bug with no definition for inline functions
     }
     builder
         .include(softfloat_source.join(Path::new("include")))
