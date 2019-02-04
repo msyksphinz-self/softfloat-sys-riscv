@@ -1,0 +1,13 @@
+# SPDX-License-Identifier: BSD-3-Clause
+# See Notices.txt for copyright information
+[package]
+name = "softfloat-sys"
+version = "0.1.0"
+authors = ["Jacob Lifshay <programmerjake@gmail.com>"]
+license = "BSD-3-Clause"
+
+[dependencies]
+c99 = "0.1.1"
+
+[build-dependencies]
+cc = "1.0"
