@@ -2,12 +2,29 @@
 // See Notices.txt for copyright information
 
 extern crate cc;
+extern crate cc_version;
 
-use std::path::Path;
+use cc_version::{cc_version, Version};
 use std::env;
+use std::path::Path;
 
 fn main() {
     let mut builder = cc::Build::new();
+
+    let tool = builder.get_compiler();
+    let thread_local = if tool.is_like_gnu() {
+        let version = cc_version(&tool).expect("Failed to detect GCC version");
+
+        // GCC 4.9 supports _Thread_local
+        if version >= Version::parse("4.9").unwrap() {
+            Some("_Thread_local")
+        } else {
+            Some("__thread")
+        }
+    } else {
+        Some("_Thread_local")
+    };
+
     let softfloat_base = Path::new("berkeley-softfloat-3");
     let softfloat_source = softfloat_base.join(Path::new("source"));
     let softfloat_build = softfloat_base.join(Path::new("build"));
@@ -329,9 +346,18 @@ fn main() {
             .define("SOFTFLOAT_FAST_DIV32TO16", None)
             .define("SOFTFLOAT_FAST_DIV64TO32", None)
             .define("SOFTFLOAT_FAST_INT64", None)
-            .define("THREAD_LOCAL", Some("_Thread_local"))
-            .files(primitive_sources.iter().chain(other_sources.iter()).map(|file| softfloat_source.join(Path::new(file))))
-            .files(specialize_sources.iter().map(|file| specialized_source_path.join(Path::new(file))));
+            .define("THREAD_LOCAL", thread_local)
+            .files(
+                primitive_sources
+                    .iter()
+                    .chain(other_sources.iter())
+                    .map(|file| softfloat_source.join(Path::new(file))),
+            )
+            .files(
+                specialize_sources
+                    .iter()
+                    .map(|file| specialized_source_path.join(Path::new(file))),
+            );
     } else {
         unimplemented!("build rules are not implemented for the current target_arch and target_os");
     }
