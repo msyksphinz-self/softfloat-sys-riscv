@@ -2,7 +2,7 @@
 # See Notices.txt for copyright information
 [package]
 name = "softfloat-sys-riscv"
-version = "0.1.2"
+version = "0.1.0"
 authors = ["msyksphinz <msyksphinz.dev@gmail.com>"]
 license = "BSD-3-Clause"
 description = "Rust bindings for Berkeley SoftFloat 3 with RISC-V configuration build"
