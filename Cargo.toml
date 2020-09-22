@@ -1,12 +1,12 @@
 # SPDX-License-Identifier: BSD-3-Clause
 # See Notices.txt for copyright information
 [package]
-name = "softfloat-sys"
+name = "softfloat-sys-riscv"
 version = "0.1.2"
-authors = ["Jacob Lifshay <programmerjake@gmail.com>"]
+authors = ["msyksphinz <msyksphinz.dev@gmail.com>"]
 license = "BSD-3-Clause"
-description = "Rust bindings for Berkeley SoftFloat 3"
-repository = "https://salsa.debian.org/Kazan-team/softfloat-sys"
+description = "Rust bindings for Berkeley SoftFloat 3 with RISC-V configuration build"
+repository = "https://github.com/msyksphinz-self/softfloat-sys-riscv"
 
 [dependencies]
 c99 = "0.1.1"

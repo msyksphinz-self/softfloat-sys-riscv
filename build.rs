@@ -337,7 +337,7 @@ fn main() {
             "f128M_le_quiet.c",
             "f128M_lt_quiet.c",
         ];
-        let specialized_source_path = softfloat_source.join(Path::new("8086-SSE"));
+        let specialized_source_path = softfloat_source.join(Path::new("RISCV"));
         builder
             .include(softfloat_build.join(Path::new("Linux-x86_64-GCC")))
             .include(&specialized_source_path)
